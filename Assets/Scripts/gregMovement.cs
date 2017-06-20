@@ -17,11 +17,14 @@ public class gregMovement : MonoBehaviour
     public NavMeshAgent nav;
     public Vector3 Target;
     public bool nomNom = false;
+    public Rigidbody rigBody;
 
 
     private void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+        rigBody = GetComponent<Rigidbody>();
+        
     }
 
     private void Update()
@@ -60,7 +63,7 @@ public class gregMovement : MonoBehaviour
         }
     }
 
-    void NewTarget()
+   public void NewTarget()
     {
         float myX = transform.position.x;
         float myZ = transform.position.z;
@@ -74,6 +77,13 @@ public class gregMovement : MonoBehaviour
        
     }
    
+    public void Halt()
+    {
+        Target = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        nav.SetDestination(Target);
+    }
+
         
     IEnumerator Eating()
 {

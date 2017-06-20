@@ -19,6 +19,7 @@ public class gregMovementPlayer : MonoBehaviour
     public Vector3 Target;
     private CharacterController controller;
     public bool nomNom = false;
+    public bool rooted = false;
 
 
     private void Start()
@@ -30,7 +31,7 @@ public class gregMovementPlayer : MonoBehaviour
 
     private void Update()
     {
-
+        if (!rooted) { 
        transform.Translate(0, 0, .1f);
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
@@ -41,7 +42,6 @@ public class gregMovementPlayer : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(transform.position, transform.forward, out hit);
         Debug.DrawRay(transform.position, forward, Color.green);
-
         if (hit.collider != null && hit.collider.transform.GetComponent<GregAnim>())
         {
        // print(hit.collider.transform.name);
@@ -55,10 +55,11 @@ public class gregMovementPlayer : MonoBehaviour
                 Destroy(hit.collider.gameObject, 0);
                 transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
                 StartCoroutine(Eating());
+                    }
+                }
             }
         }
     }
-}
         
     IEnumerator Eating()
     {
